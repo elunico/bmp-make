@@ -1,0 +1,7 @@
+/target
+*.txt
+*.dSYM
+*.bmp
+transform
+main
+.vscode
