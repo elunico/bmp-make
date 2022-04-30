@@ -38,23 +38,23 @@ The actual range of acceptable input chars and their values varies based on the 
 
 The format of data uses the new line char `\\n` to deliminate lines of the image.
 
-Therefore an input string such as `1111\n1111\n0000\n0000` in `bin` mode would have two 4-pixel lines of black and then 2 4-pixel lines of white.
+Therefore an input string such as `1111\n1111\n0000\n0000` in `bin` mode would have two 4-pixel lines of white and then 2 4-pixel lines of black.
 
 ### Command line arguments
 
 The program takes 2 command line arguments
 
-The first argument is the format of the input. This may be `bin`, `dec`, or `hex` and it indicates
+The first argument to the program is the filename to save the bmp as
+
+The second argument is the format of the input. This may be `bin`, `dec`, or `hex` and it indicates
 to the `main.cpp` program what kind of data it will be given. This determines the brightness levels for each input digit. If binary mode is used
-with the `bin` argument, then `0` represents white and `1` represents black. If `dec` is used then `0` represents white and `9` represents black with shades of gray between. Finally, if `hex` is used then `0` represents white and `f` represents black and shades of gray inbetween.
+with the `bin` argument, then `0` represents black and `1` represents white. If `dec` is used then `0` represents black and `9` represents white with shades of gray between. Finally, if `hex` is used then `0` represents black and `f` represents white and shades of gray inbetween.
 
 ***Note that only lowercase hex values can be used meaning letters `A` through `F` are invalid only `a` through `f` are allowed***
 
-The second argument to the program is the filename to save the bmp as
-
 ### Example:
 
-a 4x4 image with two black pixel rows and 2 white pixel rows
+a 4x4 image with two white pixel rows and 2 black pixel rows
 
 ```shell
 $ echo '1111\n1111\n0000\n0000' | ./main bin image.bmp

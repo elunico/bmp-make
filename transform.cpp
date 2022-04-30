@@ -47,18 +47,20 @@ constexpr auto transform_dec =
     [](std::vector<char> const &digits) -> std::vector<char> { return digits; };
 
 int usage(std::string const &name) {
-  std::cerr << "Usage: " << name << " <FORMAT> <OUTPUT_FILE> [ <WIDTH> ]"
+  std::cerr << "Usage: " << name << " <OUTPUT_FILE> <FORMAT> [ <WIDTH> ]"
             << std::endl;
   return 1;
 }
 
 int main(int argc, char const *argv[]) {
+
   if (argc < 2 || argv[1] == nullptr) {
     return usage(argv[0]);
   }
   auto filename = argv[1];
   std::ifstream ifs{filename};
   if (!ifs) {
+    std::cerr << "Could not open file " << filename << std::endl;
     return usage(argv[0]);
   }
 
