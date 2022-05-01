@@ -12,7 +12,7 @@ std::ostream &operator<<(std::ostream &os, uint8_t const &c) {
   return os;
 }
 
-std::map<char, Color> build_map(std::vector<char> &chars) {
+std::map<char, Color> build_map(std::vector<char> const &chars) {
   std::map<char, Color> map{};
   auto max = chars.size() - 1;
   for (auto i = 0; i < chars.size(); ++i) {
@@ -23,17 +23,19 @@ std::map<char, Color> build_map(std::vector<char> &chars) {
   return map;
 }
 
-void tokenize(std::string const &str, const char delim,
-              std::vector<std::string> &out) {
+std::vector<std::vector<char>> tokenize(std::vector<char> const &str,
+                                        const char delim) {
+  std::vector<std::vector<char>> tokens{};
   auto start = 0;
   while (start < str.size()) {
-    auto end = str.find(delim, start);
-    if (end == std::string::npos) {
-      end = str.size();
+    auto end = start;
+    while (end < str.size() && str[end] != delim) {
+      ++end;
     }
-    out.push_back(str.substr(start, end - start));
+    tokens.push_back(std::vector<char>(str.begin() + start, str.begin() + end));
     start = end + 1;
   }
+  return tokens;
 }
 
 int main(int argc, char *argv[]) {
@@ -71,30 +73,41 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  std::cerr << "\033[94m"
+            << "Reading file " << argv[2] << std::endl;
   auto filename = std::string{argv[2]};
 
+  std::cerr << "\033[94m"
+            << "Read file!" << std::endl;
   auto map = build_map(chars);
 
+  std::cerr << "\033[94m"
+            << "Reading stdin..." << std::endl;
   std::vector<char> image_content{};
   char c;
   while (std::cin.get(c)) {
     image_content.push_back(c);
   }
 
-  std::cout << "Done reading input" << std::endl;
+  std::cerr << "\033[94m"
+            << "Done reading stdin" << std::endl;
 
-  std::string s{image_content.begin(), image_content.end()};
-
-  // panic!("String length is {}", string.len());
-  std::vector<std::string> lines{};
-  tokenize(s, '\n', lines);
-  std::cout << lines.size() << std::endl;
+  std::cerr << "\033[94m"
+            << "Tokenizing lines..." << std::endl;
+  std::vector<std::vector<char>> lines = tokenize(image_content, '\n');
+  std::cerr << "\033[94m"
+            << "Found " << lines.size() << " lines" << std::endl;
 
   if (lines.size() == 0 || lines[0].size() == 0) {
-    std::cout << "Input has no content" << std::endl;
+    std::cerr << "\033[94m"
+              << "Input has no content" << std::endl;
+    std::cerr << "\033[94m"
+              << "Exiting!" << std::endl;
     return 2;
   }
 
+  std::cerr << "\033[94m"
+            << "Creating Image..." << std::endl;
   Image image(lines[0].size(), lines.size());
   auto y = 0;
   for (auto const &line : lines) {
@@ -107,5 +120,7 @@ int main(int argc, char *argv[]) {
     }
     y++;
   }
+  std::cerr << "\033[94m"
+            << "Writing file..." << std::endl;
   image.write_to_file(filename);
 }
