@@ -7,7 +7,7 @@
 #include <vector>
 
 template <typename Integral> std::vector<uint8_t> get_le_bytes(Integral value) {
-  std::vector<uint8_t> result;
+  std::vector<uint8_t> result{};
   result.reserve(sizeof(value));
   for (auto i = 0; i < sizeof(value); ++i) {
     result.push_back(static_cast<uint8_t>(value & 0xFF));

@@ -13,7 +13,7 @@ std::ostream &operator<<(std::ostream &os, uint8_t const &c) {
 }
 
 std::map<char, Color> build_map(std::vector<char> &chars) {
-  auto map = std::map<char, Color>();
+  std::map<char, Color> map{};
   auto max = chars.size() - 1;
   for (auto i = 0; i < chars.size(); ++i) {
     uint8_t value = static_cast<uint8_t>((i / static_cast<double>(max)) * 255);
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 
   auto map = build_map(chars);
 
-  std::vector<char> image_content;
+  std::vector<char> image_content{};
   char c;
   while (std::cin.get(c)) {
     image_content.push_back(c);
@@ -83,10 +83,10 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Done reading input" << std::endl;
 
-  std::string s(image_content.begin(), image_content.end());
+  std::string s{image_content.begin(), image_content.end()};
 
   // panic!("String length is {}", string.len());
-  auto lines = std::vector<std::string>();
+  std::vector<std::string> lines{};
   tokenize(s, '\n', lines);
   std::cout << lines.size() << std::endl;
 
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
     return 2;
   }
 
-  auto image = Image(lines[0].size(), lines.size());
+  Image image(lines[0].size(), lines.size());
   auto y = 0;
   for (auto const &line : lines) {
     auto x = 0;
