@@ -25,9 +25,9 @@ unsigned int isqrt(unsigned int y) {
 }
 
 constexpr auto transform_bin =
-    [](std::vector<char> const &digits) -> std::vector<char> {
+    [](std::vector<char> const& digits) -> std::vector<char> {
   auto result = std::vector<char>();
-  for (auto &digit : digits) {
+  for (auto& digit : digits) {
     auto count = 0;
     auto value = static_cast<unsigned int>(digit - '0');
     while (value > 0) {
@@ -44,17 +44,16 @@ constexpr auto transform_bin =
 };
 
 constexpr auto transform_dec =
-    [](std::vector<char> const &digits) -> std::vector<char> { return digits; };
+    [](std::vector<char> const& digits) -> std::vector<char> { return digits; };
 
-int usage(std::string const &name) {
+int usage(std::string const& name) {
   std::cerr << "\033[95m"
             << "Usage: " << name << " <OUTPUT_FILE> <FORMAT> [ <WIDTH> ]"
             << "\033[0m" << std::endl;
   return 1;
 }
 
-int main(int argc, char const *argv[]) {
-
+int main(int argc, char const* argv[]) {
   if (argc < 2 || argv[1] == nullptr) {
     return usage(argv[0]);
   }
@@ -107,9 +106,9 @@ int main(int argc, char const *argv[]) {
             << "Writing out transformed image data of length " << digits.size()
             << "\033[0m" << std::endl;
   std::size_t index = 0;
-  for (auto const &digit : digits) {
+  for (auto const& digit : digits) {
     if (index > 0 && index % width == 0) {
-      std::cout << '\n' << std::endl;
+      std::cout << '\n';
     } else {
       std::cout << digit;
     }
