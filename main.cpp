@@ -113,7 +113,14 @@ int main(int argc, char *argv[]) {
   for (auto const &line : lines) {
     auto x = 0;
     for (auto const &c : line) {
-      auto clr = map.at(c);
+      Color clr;
+      try {
+        clr = map.at(c);
+      } catch (...) {
+        std::cerr << "\033[94m"
+                  << "Invalid character: " << c << " substituting black\n";
+        clr = Color{0, 0, 0};
+      }
 
       image.set_pixel(x, y, clr);
       x++;
